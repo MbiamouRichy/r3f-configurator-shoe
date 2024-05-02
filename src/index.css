@@ -1,3 +1,73 @@
+@import url("https://rsms.me/inter/inter.css");
+@font-face {
+  font-family: "junegull";
+  src: url("font/junegull.ttf") format("truetype");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+#main {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  position: relative;
+}
+@layer utilities {
+  canvas {
+    touch-action: none;
+  }
+
+  button {
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bolder;
+    pointer-events: all;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    box-shadow: inset 0 0 0 0.09px black;
+
+    text-transform: uppercase;
+    padding: 15px 30px;
+  }
+
+  button:hover {
+    box-shadow: inset 250px 0 0 0 black;
+    transform: scale(1.1);
+  }
+
+  h1 {
+    font-weight: 800;
+    font-style: italic;
+    font-family: "junegull", sans-serif;
+    @apply text-[13vh] md:text-[20vh] leading-[13vh] md:leading-[20vh];
+  }
+  .text-vide {
+    -webkit-text-fill-color: transparent;
+  }
+  .text-plein {
+    -webkit-text-stroke: 1px;
+  }
+  .dechireHaut {
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  }
+  .dechireBas {
+    clip-path: polygon(0 100%, 100% 100%, 100% 50%, 0 50%);
+  }
+}
