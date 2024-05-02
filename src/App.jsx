@@ -1,11 +1,15 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import { Center, Environment, useGLTF } from "@react-three/drei";
+import {
+  CameraControls,
+  Center,
+  Environment,
+  useGLTF,
+} from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion-3d";
 import { easing } from "maath";
 import { useRef, useState } from "react";
-import { radToDeg } from "three/src/math/MathUtils.js";
 import { useSnapshot } from "valtio";
 import { state } from "./store";
 export const App = () => {
@@ -26,6 +30,7 @@ export const App = () => {
         <Environment preset="sunset" />
 
         <CameraRig>
+          <CameraControls />
           {snap.activeSlide == 0 && (
             <Center>
               <AnimateShoe>
@@ -64,7 +69,6 @@ const AnimateShoe = ({ children }) => {
   const group = useRef();
   const [positionY, setPositionY] = useState(0);
   const [direction, setDirection] = useState(1);
-
   useFrame(() => {
     setPositionY((prevPositionY) => prevPositionY + direction * 0.0002);
     if (positionY > 0.008) {
@@ -73,15 +77,9 @@ const AnimateShoe = ({ children }) => {
       setDirection(1);
     }
     group.current.position.y = positionY;
-    group.current.rotation.y = radToDeg(positionY);
   });
 
-  // useFrame((state, delta) => {
-  //   group.current.position.x = parseInt(`-${state.activeSlide}00`);
-  //   // easing.dampE(group.current.position, [-300, 0, 0], 0.25, delta);
-  // });
-
-  return <group ref={group}>{children}</group>;
+  return <motion.group ref={group}>{children}</motion.group>;
 };
 
 const Shoe = (props) => {
@@ -97,8 +95,11 @@ const Shoe = (props) => {
       receiveShadow
       geometry={nodes.Object_2.geometry}
       material={materials["Material.001"]}
-      rotation={[30, -50.3, 4.8]}
+      rotation={[-1.4, 0, -1.8]}
       position={[0, 0, 0]}
+      initial={{ rotateZ: -9, opacity: 0 }}
+      animate={{ rotateZ: -1.8, opacity: 1 }}
+      transition={{ type: "spring", duration: "0.8", ease: "backOut" }}
     />
   );
 };
@@ -107,7 +108,7 @@ const Shoe2 = (props) => {
   const { nodes, materials } = useGLTF("/nike_air_max_90 (1).glb");
 
   return (
-    <mesh
+    <motion.mesh
       {...props}
       dispose={null}
       castShadow
@@ -117,6 +118,9 @@ const Shoe2 = (props) => {
       rotation={[1.6, 3.7, 1.2]}
       scale={1.766}
       position={[0, 0, 0]}
+      initial={{ rotateX: 9, opacity: 0 }}
+      animate={{ rotateX: 1.6, opacity: 1 }}
+      transition={{ type: "spring", duration: "0.8", ease: "backOut" }}
     />
   );
 };
@@ -125,7 +129,7 @@ const Shoe3 = (props) => {
   // Nike 90 1
   const { nodes, materials } = useGLTF("/nike_air_max_90_1.glb");
   return (
-    <mesh
+    <motion.mesh
       {...props}
       scale={2}
       rotation={[0, 0, 0.5]}
@@ -134,6 +138,9 @@ const Shoe3 = (props) => {
       geometry={nodes.Mesh.geometry}
       material={materials.Texture}
       position={[0, 0, 0]}
+      initial={{ rotateX: 8, opacity: 0 }}
+      animate={{ rotateX: 0, opacity: 1 }}
+      transition={{ type: "spring", duration: "0.8", ease: "backOut" }}
     />
   );
 };
@@ -144,16 +151,19 @@ const Shoe4 = (props) => {
     "/nike_air_uptempo_sneaker3d_scanned_low_poly.glb"
   );
   return (
-    <group {...props} dispose={null} scale={0.01}>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Nike_Uptempo_Lowpoly_Material_0.geometry}
-        material={materials.Material}
-        rotation={[0, 3.5, -0.4]}
-        scale={22.856}
-      />
-    </group>
+    <motion.mesh
+      {...props}
+      dispose={null}
+      castShadow
+      receiveShadow
+      geometry={nodes.Nike_Uptempo_Lowpoly_Material_0.geometry}
+      material={materials.Material}
+      rotation={[0, 3.5, -0.4]}
+      scale={0.3}
+      initial={{ rotateX: 8, opacity: 0 }}
+      animate={{ rotateX: 0, opacity: 1 }}
+      transition={{ type: "spring", duration: "0.8", ease: "backOut" }}
+    />
   );
 };
 
@@ -161,7 +171,6 @@ function CameraRig({ children }) {
   const group = useRef();
 
   useFrame((state, delta) => {
-    // easing.damp3(state.camera.position, [0, 0, 0], 0.25, delta);
     easing.dampE(
       group.current.rotation,
       [state.pointer.y / 10, -state.pointer.x / 5, 0],

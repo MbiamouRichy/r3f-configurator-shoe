@@ -16,15 +16,12 @@ export default function SlideNav() {
   return (
     <>
       <motion.footer
-        initial={{ opacity: 0, y: -120 }}
+        initial={{ opacity: 0, y: 120 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", duration: 1.8, delay: 1.3 }}
         className="p-10 w-full z-30 flex flex-row justify-center items-center gap-3 fixed bottom-0 left-0"
       >
         <button
-          style={{
-            background: `${snap.selectedColors}`,
-          }}
           onClick={() => {
             state.activeSlide = state.activeSlide - 1;
             indexChange();
@@ -33,17 +30,8 @@ export default function SlideNav() {
         >
           <ArrowLeft />
         </button>
+        <button>Shop now!</button>
         <button
-          style={{
-            background: `${snap.selectedColors}`,
-          }}
-        >
-          Shop now!
-        </button>
-        <button
-          style={{
-            background: `${snap.selectedColors}`,
-          }}
           onClick={() => {
             state.activeSlide = state.activeSlide + 1;
             indexChange();
