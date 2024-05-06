@@ -11,7 +11,6 @@ export default function SlideNav() {
       state.activeSlide = 0;
     }
     state.selectedColors = state.colors[state.activeSlide];
-    console.log(snap.activeSlide, state.activeSlide);
   }
   return (
     <>

@@ -1,7 +1,7 @@
 @import url("https://rsms.me/inter/inter.css");
 @font-face {
   font-family: "junegull";
-  src: url("font/junegull.ttf") format("truetype");
+  src: url("/font/junegull.ttf") format("truetype");
 }
 
 @tailwind base;
