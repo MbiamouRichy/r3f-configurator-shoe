@@ -3,6 +3,7 @@
 import {
   CameraControls,
   Center,
+  ContactShadows,
   Environment,
   useGLTF,
 } from "@react-three/drei";
@@ -28,7 +29,12 @@ export const App = () => {
       >
         <ambientLight intensity={10} />
         <Environment preset="sunset" />
-
+        <ContactShadows
+          frames={1}
+          blur={1}
+          rotateX={0.2}
+          position={[0, -0.33, 0]}
+        />
         <CameraRig>
           <CameraControls />
           {snap.activeSlide == 0 && (
